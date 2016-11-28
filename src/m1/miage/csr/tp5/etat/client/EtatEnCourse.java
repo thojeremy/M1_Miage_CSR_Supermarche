@@ -6,7 +6,7 @@ public class EtatEnCourse implements Etat{
 	private String nom;
 	
 	public EtatEnCourse(){
-		nom = "EtatEnCourse";
+		nom = EtatClient.EN_COURSE;
 	}
 	
 	public String toString(){
@@ -28,7 +28,7 @@ public class EtatEnCourse implements Etat{
 	@Override
 	public String getEtat() {
 		// TODO Auto-generated method stub
-		return null;
+		return nom;
 	}
 
 }

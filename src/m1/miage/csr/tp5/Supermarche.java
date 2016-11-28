@@ -1,26 +1,28 @@
 package m1.miage.csr.tp5;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class Supermarche {
-	private final static int TPS_ENTREPOT_CHEF 				= 0;
-	private final static int TPS_DEPLACEMENT_RAYON_CHEF 	= 1;
-	private final static int TPS_DEPLACEMENT_RAYON_CLIENT 	= 2;
-	private final static int TPS_ARTICLE_TAPIS 				= 3;
+	public final static int NB_ARTICLES			= 4;
+	public final static int NB_RAYONS			= 4;
+	public final static int NB_CHARIOTS 		= 5;
+	public final static int NB_CLIENTS			= 42;
 	
-	private final static int RAYON_STOCK_INIT 	= 5;
-	private final static int RAYON_STOCK_MAX 	= 15;
-	private final static int NB_RAYONS			= 4;
-	private final static int[] TPS 				= {500, 200, 300, 20};
+	public final static String[] NOM_ARTICLE	= {"Pain au chocolat au chocolat blanc de Budapest, saupoudrés de petites paillettes de sucre", "Mikados gout banane de Martinique, flambée", "Chocolatine au chocolat noir de Cuba", "Pain aux raisins verts cultivés au bon soleil de Bordeaux"};
+	
+	public final static int TPS_ENTREPOT_CHEF 				= 0;
+	public final static int TPS_DEPLACEMENT_RAYON_CHEF 		= 1;
+	public final static int TPS_DEPLACEMENT_RAYON_CLIENT 	= 2;
+	public final static int TPS_ARTICLE_TAPIS 				= 3;
+	
+	public final static int[] TPS 				= {500, 200, 300, 20};
 	private final static int TAILLE_TAPIS 		= 10;
-	private final static int NB_CHARIOTS 		= 5;
 	
-	private final static String[] NOM_ARTICLE	= {"Pain au chocolat au chocolat blanc de Budapest, saupoudrÃ©s de petites paillettes de sucre", "Mikados gout banane de Martinique, flambÃ©e", "Chocolatine au chocolat noir de Cuba", "Pain aux raisins verts cultivÃ©s au bon soleil de Bordeaux"};
-	
-	private static Client[] 	clients;
-	private static Article[] 	articles;
-	private static Rayon[]		rayons;
-	private static Chariot[]	chariots;
+	public static Client[] 		clients;
+	public static Article[] 	articles;
+	public static Rayon[]		rayons;
+	public static FileChariots	chariots;
 	
 	private static ChefDeRayon 		chefDeRayon;
 	private static EmployeDeCaisse	employeDeCaisse;
@@ -28,33 +30,58 @@ public class Supermarche {
 	
 	private static void genererArticles()
 	{
+		articles = new Article[NB_ARTICLES];
+		
+		// Génération des articles
+		for(int i = 0; i < NB_ARTICLES; i++){
+			articles[i] = new Article(NOM_ARTICLE[i]);
+		}
 	}
 	
 	private static void genererRayons()
 	{
+		rayons = new Rayon[NB_RAYONS];
+		// Génération des rayons
+		for(int i = 0; i < NB_RAYONS; i++){
+			rayons[i] = new Rayon(articles[i]);
+		}
 	}
 	
 	private static void genererChariots()
 	{
+		// Génération des chariots
+		chariots = new FileChariots(NB_CHARIOTS);
 	}
 	
 	private static void genererClients()
 	{
+		clients = new Client[NB_CLIENTS];
+		
+		// Génération des clients
 		int nb = new Random().nextInt(24) + 18;
-		for (int i=0;i<=nb; i++)
+		for (int i = 0; i < NB_CLIENTS; i++)
 		{
+			// Génération du nom aléatoire
 			String nom = "";
 			int nbLettres = new Random().nextInt(7) + 1;
+			
 			for(int j = 0; j < nbLettres; j++){
 				nom += (nom.length() == 0 ? ( (char) (new Random().nextInt(25) + 65)) : ((char) (new Random().nextInt(25) + 97)) );
 			}
-			System.out.println(nom);
-			//clients[i] = new Client(nom);
+			
+			// Génération du client
+			clients[i] = new Client(nom);
 		}
 	}
 	
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		genererClients();		
+		genererArticles();
+		genererRayons();
+		genererChariots();
+		genererClients();
+		
+		for(int i = 0; i < NB_CLIENTS; i++){
+			clients[i].start();
+		}
 	}
 }

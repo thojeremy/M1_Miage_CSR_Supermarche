@@ -7,7 +7,7 @@ public class EtatAttenteCaisse implements Etat{
 	
 	public EtatAttenteCaisse()
 	{
-		nom = "EtatAttenteCaisse";
+		nom = EtatClient.ATTENTE_CAISSE;
 	}
 	
 	public String toString()
@@ -30,7 +30,7 @@ public class EtatAttenteCaisse implements Etat{
 	@Override
 	public String getEtat() {
 		// TODO Auto-generated method stub
-		return null;
+		return nom;
 	}
 
 }

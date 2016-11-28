@@ -6,7 +6,7 @@ public class EtatEntrepot implements Etat{
 	String nom;
 
 	public EtatEntrepot(){
-		nom = "EtatEntrepot";
+		nom = EtatChef.EN_ENTREPOT;
 	}
 
 	@Override

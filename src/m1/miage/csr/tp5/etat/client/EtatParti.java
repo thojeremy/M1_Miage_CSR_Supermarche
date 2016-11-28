@@ -2,16 +2,15 @@ package m1.miage.csr.tp5.etat.client;
 
 import m1.miage.csr.tp5.etat.Etat;
 
-public class EtatALaCaisse implements Etat{
-	private String nom;
+public class EtatParti implements Etat{
+	String nom;
 	
-	public EtatALaCaisse()
+	public EtatParti()
 	{
-		nom = EtatClient.A_LA_CAISSE;
+		nom = EtatClient.ATTENTE_PRODUIT;
 	}
 	
-	public String toString()
-	{
+	public String toString(){
 		return nom;
 	}
 
@@ -32,5 +31,4 @@ public class EtatALaCaisse implements Etat{
 		// TODO Auto-generated method stub
 		return nom;
 	}
-
 }

@@ -50,6 +50,6 @@ public class EtatChef implements Etat{
 
 	@Override
 	public String getEtat() {
-		return etatCourant + "";
+		return etatCourant.getEtat();
 	}
 }

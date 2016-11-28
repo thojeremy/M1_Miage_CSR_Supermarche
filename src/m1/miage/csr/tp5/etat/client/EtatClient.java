@@ -8,6 +8,7 @@ public class EtatClient implements Etat{
 	public static final String ATTENTE_PRODUIT 	= "Attente produit";
 	public static final String ATTENTE_CAISSE 	= "Attente caisse";
 	public static final String A_LA_CAISSE 		= "A la caisse";
+	public static final String PARTI			= "Parti";
 	
 	private Etat etatCourant;
 	private Etat etatAttenteChariot;
@@ -15,6 +16,7 @@ public class EtatClient implements Etat{
 	private Etat etatAttenteProduit;
 	private Etat etatAttenteCaisse;
 	private Etat etatALaCaisse;
+	private Etat etatParti;
 	
 	public EtatClient(){
 		etatAttenteChariot 	= new EtatAttenteChariot();
@@ -22,6 +24,7 @@ public class EtatClient implements Etat{
 		etatAttenteProduit 	= new EtatAttenteProduit();
 		etatAttenteCaisse 	= new EtatAttenteCaisse();
 		etatALaCaisse 		= new EtatALaCaisse();
+		etatParti			= new EtatParti();
 		
 		etatCourant = etatAttenteChariot;
 	}
@@ -49,6 +52,10 @@ public class EtatClient implements Etat{
 				etatCourant = etatALaCaisse;
 				break;
 				
+			case PARTI:
+				etatCourant = etatParti;
+				break;
+				
 			default:
 				break;
 		}
@@ -71,6 +78,9 @@ public class EtatClient implements Etat{
 			
 			case A_LA_CAISSE:
 				return etatCourant == etatALaCaisse;
+				
+			case PARTI:
+				return etatCourant == etatParti;
 			
 			default:
 				return false;
@@ -79,7 +89,7 @@ public class EtatClient implements Etat{
 
 	@Override
 	public String getEtat() {
-		return etatCourant + "";
+		return etatCourant.getEtat();
 	}
 
 }

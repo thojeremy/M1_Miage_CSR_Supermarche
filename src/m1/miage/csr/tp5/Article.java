@@ -11,4 +11,8 @@ public class Article {
 		idArticle=ID_ARTICLE++;
 		this.nom=nom;
 	}
+	
+	public String getNom(){
+		return nom;
+	}
 }

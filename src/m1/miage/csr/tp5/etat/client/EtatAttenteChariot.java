@@ -6,7 +6,7 @@ public class EtatAttenteChariot implements Etat{
 	private String nom;
 	
 	public EtatAttenteChariot(){
-		nom = "EtatAttenteChariot";
+		nom = EtatClient.ATTENTE_CHARIOT;
 	}
 	
 	public String toString(){
@@ -28,7 +28,7 @@ public class EtatAttenteChariot implements Etat{
 	@Override
 	public String getEtat() {
 		// TODO Auto-generated method stub
-		return null;
+		return nom;
 	}
 
 }
