@@ -16,4 +16,33 @@ public class Rayon {
 		
 		idRayon = ID_RAYON++;
 	}
+	
+	public synchronized void prendreArticle(int nbArticle){
+		while(stock - nbArticle < 0){
+			try{wait();}catch(Exception e){}
+		}
+		
+		stock -= nbArticle;
+	}
+	
+	public synchronized int mettreArticle(int nbArticle){
+		int articlesNonMis = 0;
+		
+		// On ajoute les articles
+		stock += nbArticle;
+		
+		// On enlève (ou pas) le surplus
+		articlesNonMis = stock - 15;
+		stock -= articlesNonMis;
+		
+		// On dit à tout le monde qu'on a mis des articles dans un rayon
+		notifyAll();
+		
+		// On renvoie le nombre d'articles qu'on n'a pas utilisé
+		return articlesNonMis;
+	}
+	
+	public Article getArticle(){
+		return article;
+	}
 }

@@ -58,14 +58,17 @@ public class Client extends Thread{
 		
 		for(int i = 0; i < nbArticles; i++){
 			int nb = new Random().nextInt(5);
+			int idArticle = new Random().nextInt(Supermarche.NB_ARTICLES - 1);
+			
 			// Contrôle pour voir si la quantité est égale à zéro
 			nb = nb == 0 ? 1 : nb;
 			
-			liste.put(Supermarche.articles[i], (liste.containsKey(Supermarche.articles[i]) ? (liste.get(Supermarche.articles[i]) + nb) : nb));
+			liste.put(Supermarche.articles[idArticle], (liste.containsKey(Supermarche.articles[idArticle]) ? (liste.get(Supermarche.articles[idArticle]) + nb) : nb));
 		}
 	}
 	
-	public void marcherEntreLesRayons(){
+	public void marcherEntreLesRayons()
+	{
 		try{sleep(Supermarche.TPS[Supermarche.TPS_DEPLACEMENT_RAYON_CLIENT]);}catch(Exception e){}
 	}
 	
@@ -77,6 +80,23 @@ public class Client extends Thread{
 		// On fait les rayons
 		etat.changerEtat(EtatClient.EN_COURSE);
 		
+		// On contrôle les rayons pour savoir vers où le client va marcher
+		for(int i = 0; i < Supermarche.rayons.length; i++){
+			Article article = Supermarche.rayons[i].getArticle();
+			
+			// On contrôle voir si le rayon a l'article voulu
+			if(liste.containsKey(article)){
+				// Si il a l'article
+				// On marche jusqu'à lui
+				marcherEntreLesRayons();
+				
+				// On prend l'article
+				Supermarche.rayons[i].prendreArticle(liste.get(article));
+				
+				// Et on le met dans le chariot
+				chariot.ajouterArticle(Supermarche.rayons[i].getArticle(), liste.get(article).intValue());
+			}
+		}
 		
 		// On va à la caisse
 		etat.changerEtat(EtatClient.ATTENTE_CAISSE);

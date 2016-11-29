@@ -80,6 +80,14 @@ public class Supermarche {
 		genererChariots();
 		genererClients();
 		
+		// On crée le chef de rayon...
+		ChefDeRayon chefDeRayon = new ChefDeRayon("Ali Baba");
+		// ... en lui disant qu'il arrêtera de travailler seulement quand il n'y aura plus de clients...
+		chefDeRayon.setDaemon(true);
+		// ... et on lui dit de commencer
+		chefDeRayon.start();
+		
+		// On dit aux clients qu'ils peuvent venir
 		for(int i = 0; i < NB_CLIENTS; i++){
 			clients[i].start();
 		}

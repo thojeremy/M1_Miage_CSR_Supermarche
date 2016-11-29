@@ -24,7 +24,6 @@ public class FileChariots {
 		}
 		
 		nbChariot--;
-		System.out.println("> PRENDRECHARIOT : " + nbChariot);
 		
 		return prendreChariotEnAttente();
 	}
@@ -40,7 +39,6 @@ public class FileChariots {
 				continuer = false;
 			}
 		}
-		System.out.println("> METTRECHARIOT : " + nbChariot);
 		
 		notifyAll();
 	}
