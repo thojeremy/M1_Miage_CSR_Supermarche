@@ -51,11 +51,13 @@ public class ChefDeRayon extends Thread{
 		}
 	}
 	
-	private void marcherEntreLesRayons(){
+	private void marcherEntreLesRayons()
+	{
 		try{sleep(Supermarche.TPS[Supermarche.TPS_DEPLACEMENT_RAYON_CHEF]);}catch(Exception e){}
 	}
 	
-	private void marcherVersEntrepot(){
+	private void marcherVersEntrepot()
+	{
 		try{sleep(Supermarche.TPS[Supermarche.TPS_ENTREPOT_CHEF]);}catch(Exception e){}
 	}
 }

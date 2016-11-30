@@ -1,12 +1,28 @@
 package m1.miage.csr.tp5;
 
-public class EmployeDeCaisse {
+public class EmployeDeCaisse extends Thread{
 	private String nom;
-	private TapisDeCaisse tdc;
+	private TapisDeCaisse tapisDeCaisse;
 	
-	public EmployeDeCaisse(String nom, TapisDeCaisse tdc)
-	{
+	public EmployeDeCaisse(String nom, TapisDeCaisse tapisDeCaisse){
 		this.nom = nom;
-		this.tdc = tdc;
+		this.tapisDeCaisse = tapisDeCaisse;
+	}
+	
+	@Override
+	public void run() {
+		while(true){
+			attendreArticleSurTapis();
+			tapisDeCaisse.enleverArticle();
+		}
+	}
+
+	public String getNom() {
+		return nom;
+	}
+	
+	public void attendreArticleSurTapis()
+	{
+		try{sleep(Supermarche.TPS[Supermarche.TPS_ARTICLE_TAPIS]);}catch(Exception e){}
 	}
 }

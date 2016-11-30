@@ -1,13 +1,12 @@
 package m1.miage.csr.tp5;
 
-import java.util.ArrayList;
 import java.util.Random;
 
 public class Supermarche {
 	public final static int NB_ARTICLES			= 4;
 	public final static int NB_RAYONS			= 4;
 	public final static int NB_CHARIOTS 		= 5;
-	public final static int NB_CLIENTS			= 42;
+	public final static int NB_CLIENTS			= 10;
 	
 	public final static String[] NOM_ARTICLE	= {"Pain au chocolat au chocolat blanc de Budapest, saupoudrés de petites paillettes de sucre", "Mikados gout banane de Martinique, flambée", "Chocolatine au chocolat noir de Cuba", "Pain aux raisins verts cultivés au bon soleil de Bordeaux"};
 	
@@ -24,9 +23,9 @@ public class Supermarche {
 	public static Rayon[]		rayons;
 	public static FileChariots	chariots;
 	
-	private static ChefDeRayon 		chefDeRayon;
-	private static EmployeDeCaisse	employeDeCaisse;
-	private static TapisDeCaisse	tapisDeCaisse;
+	public static ChefDeRayon 		chefDeRayon;
+	public static EmployeDeCaisse	employeDeCaisse;
+	public static TapisDeCaisse	tapisDeCaisse;
 	
 	private static void genererArticles()
 	{
@@ -58,7 +57,6 @@ public class Supermarche {
 		clients = new Client[NB_CLIENTS];
 		
 		// Génération des clients
-		int nb = new Random().nextInt(24) + 18;
 		for (int i = 0; i < NB_CLIENTS; i++)
 		{
 			// Génération du nom aléatoire
@@ -86,6 +84,16 @@ public class Supermarche {
 		chefDeRayon.setDaemon(true);
 		// ... et on lui dit de commencer
 		chefDeRayon.start();
+		
+		// On crée le tapis de caisse
+		tapisDeCaisse = new TapisDeCaisse(TAILLE_TAPIS);
+		
+		// On crée l'employé de caisse...
+		employeDeCaisse = new EmployeDeCaisse("Aladdin", tapisDeCaisse);
+		// ... en le faisant s'arrêter seulement lorsqu'il n'y aura plus de clients...
+		employeDeCaisse.setDaemon(true);
+		// ... et on lui dit de commencer
+		employeDeCaisse.start();
 		
 		// On dit aux clients qu'ils peuvent venir
 		for(int i = 0; i < NB_CLIENTS; i++){

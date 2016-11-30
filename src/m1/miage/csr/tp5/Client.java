@@ -31,6 +31,14 @@ public class Client extends Thread{
 		return etat.getEtat();
 	}
 	
+	public long getId(){
+		return idClient;
+	}
+	
+	public String getNom(){
+		return nom;
+	}
+	
 	public void prendreChariot()
 	{
 		etat.changerEtat(EtatClient.EN_COURSE);
@@ -98,8 +106,13 @@ public class Client extends Thread{
 			}
 		}
 		
-		// On va à la caisse
+		// On va à la caisse...
 		etat.changerEtat(EtatClient.ATTENTE_CAISSE);
+		
+		// ... et on met les articles sur le tapis
+		for(Article a : chariot.prendreArticle().keySet()){
+			Supermarche.tapisDeCaisse.mettreArticles(this, a, chariot.prendreArticle().get(a));
+		}
 		
 		// On passe à la caisse
 		etat.changerEtat(EtatClient.A_LA_CAISSE);

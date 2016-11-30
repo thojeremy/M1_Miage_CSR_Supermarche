@@ -46,4 +46,9 @@ public class Chariot {
 
 		return h;
 	}
+	
+	public Map<Article, Integer> prendreArticle()
+	{
+		return articles;
+	}
 }
