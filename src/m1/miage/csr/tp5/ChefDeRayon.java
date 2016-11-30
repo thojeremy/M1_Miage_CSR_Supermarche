@@ -28,15 +28,19 @@ public class ChefDeRayon extends Thread{
 		// Il commence à l'entrepôt
 		while(true){
 			// On commence par prendre les articles dans l'entrepôt
+			System.out.println("CHEF DE RAYON> Dans l'entrepot");
 			for(int i = 0; i < Supermarche.articles.length; i++){
 				// Il prend un nombre aléatoire (entre 1 et 5) de l'article avec lui
 				articles.put(Supermarche.articles[i], (new Random().nextInt(4) + 1));
 			}
-			
+
+			System.out.println("CHEF DE RAYON> Dans les rayons");
 			// On marche vers les rayons pour les remplir
 			etat.changerEtat(EtatChef.EN_RAYON);
 			for(int i = 0; i < Supermarche.rayons.length; i++){
 				marcherEntreLesRayons();
+
+				System.out.println("CHEF DE RAYON> Dans le rayon des " + Supermarche.rayons[i].getArticle().getNom());
 				
 				// On met les articles en rayon...
 				int articlesNonMis = Supermarche.rayons[i].mettreArticle(articles.get(Supermarche.rayons[i].getArticle()));
@@ -59,5 +63,9 @@ public class ChefDeRayon extends Thread{
 	private void marcherVersEntrepot()
 	{
 		try{sleep(Supermarche.TPS[Supermarche.TPS_ENTREPOT_CHEF]);}catch(Exception e){}
+	}
+
+	public String getNom() {
+		return nom;
 	}
 }

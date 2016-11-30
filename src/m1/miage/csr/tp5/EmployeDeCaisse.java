@@ -12,17 +12,11 @@ public class EmployeDeCaisse extends Thread{
 	@Override
 	public void run() {
 		while(true){
-			attendreArticleSurTapis();
 			tapisDeCaisse.enleverArticle();
 		}
 	}
 
 	public String getNom() {
 		return nom;
-	}
-	
-	public void attendreArticleSurTapis()
-	{
-		try{sleep(Supermarche.TPS[Supermarche.TPS_ARTICLE_TAPIS]);}catch(Exception e){}
 	}
 }

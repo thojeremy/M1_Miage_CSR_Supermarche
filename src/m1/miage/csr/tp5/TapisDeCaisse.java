@@ -46,7 +46,7 @@ public class TapisDeCaisse{
 		// On ajoute l'article
 		ordreArticles.add(article);
 		
-		System.out.println("AJOUTER> "+ordreArticles.size());
+		System.out.println("AJOUTER ARTICLE TAPIS> "+ordreArticles.size());
 		
 		notify();
 	}
@@ -58,8 +58,6 @@ public class TapisDeCaisse{
 		
 		// On prend le premier client
 		Client client = prendrePremierClient();
-		
-		System.out.println("ENLEVER> "+ordreArticles.size());
 		
 		// On prend son premier article...
 		Article article = ordreArticles.remove(0);
@@ -73,6 +71,8 @@ public class TapisDeCaisse{
 			tapis.remove(client);
 			supprimerPremierClient();
 		}
+		
+		System.out.println("ENLEVER ARTICLE TAPIS> "+ordreArticles.size());
 			
 		notify();
 	}

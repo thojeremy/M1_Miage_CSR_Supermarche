@@ -6,7 +6,7 @@ public class Supermarche {
 	public final static int NB_ARTICLES			= 4;
 	public final static int NB_RAYONS			= 4;
 	public final static int NB_CHARIOTS 		= 5;
-	public final static int NB_CLIENTS			= 10;
+	public final static int NB_CLIENTS			= 42;
 	
 	public final static String[] NOM_ARTICLE	= {"Pain au chocolat au chocolat blanc de Budapest, saupoudrés de petites paillettes de sucre", "Mikados gout banane de Martinique, flambée", "Chocolatine au chocolat noir de Cuba", "Pain aux raisins verts cultivés au bon soleil de Bordeaux"};
 	
@@ -81,7 +81,7 @@ public class Supermarche {
 		// On crée le chef de rayon...
 		ChefDeRayon chefDeRayon = new ChefDeRayon("Ali Baba");
 		// ... en lui disant qu'il arrêtera de travailler seulement quand il n'y aura plus de clients...
-		chefDeRayon.setDaemon(true);
+		//chefDeRayon.setDaemon(true);
 		// ... et on lui dit de commencer
 		chefDeRayon.start();
 		
@@ -91,7 +91,7 @@ public class Supermarche {
 		// On crée l'employé de caisse...
 		employeDeCaisse = new EmployeDeCaisse("Aladdin", tapisDeCaisse);
 		// ... en le faisant s'arrêter seulement lorsqu'il n'y aura plus de clients...
-		employeDeCaisse.setDaemon(true);
+		//employeDeCaisse.setDaemon(true);
 		// ... et on lui dit de commencer
 		employeDeCaisse.start();
 		

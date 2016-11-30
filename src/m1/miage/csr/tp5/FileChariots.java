@@ -25,12 +25,16 @@ public class FileChariots {
 		
 		nbChariot--;
 		
+		System.out.println("PRENDRE CHARIOT> " + nbChariot);
+		
 		return prendreChariotEnAttente();
 	}
 	
 	public synchronized void mettreChariot(Chariot chariot)
 	{
 		nbChariot++;
+		
+		System.out.println("METTRE CHARIOT> " + nbChariot);
 		
 		boolean continuer = true;
 		for(int i = 0; i < chariots.length && continuer; i++){
