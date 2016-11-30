@@ -24,7 +24,7 @@ public class Rayon {
 		
 		stock -= nbArticle;
 		
-		System.out.println("PRENDRE ARTICLE RAYON> " + nbArticle + " " + article.getNom() + " (" + stock + "en stock après avoir pris)");
+		System.out.println("PRENDRE ARTICLE RAYON> " + nbArticle + " " + article.getNom() + " (" + stock + " en stock après avoir pris)");
 	}
 	
 	public synchronized int mettreArticle(int nbArticle){
@@ -37,7 +37,7 @@ public class Rayon {
 		articlesNonMis = stock - RAYON_STOCK_MAX;
 		stock -= articlesNonMis;
 		
-		System.out.println("METTRE ARTICLE RAYON> " + (nbArticle - articlesNonMis) + " " + article.getNom() + " (" + stock + "en stock après avoir mis)");
+		System.out.println("METTRE ARTICLE RAYON> " + (nbArticle - articlesNonMis) + " " + article.getNom() + " (" + stock + " en stock après avoir mis)");
 		
 		// On dit à tout le monde qu'on a mis des articles dans un rayon
 		notifyAll();

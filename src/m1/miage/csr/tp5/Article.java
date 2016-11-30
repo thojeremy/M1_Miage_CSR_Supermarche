@@ -8,11 +8,15 @@ public class Article {
 	
 	public Article(String nom)
 	{
-		idArticle=ID_ARTICLE++;
+		idArticle = ID_ARTICLE++;
 		this.nom=nom;
 	}
 	
 	public String getNom(){
 		return nom;
+	}
+
+	public int getIdArticle() {
+		return idArticle;
 	}
 }

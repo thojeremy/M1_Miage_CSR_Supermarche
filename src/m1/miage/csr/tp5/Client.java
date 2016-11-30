@@ -69,9 +69,9 @@ public class Client extends Thread{
 			int idArticle = new Random().nextInt(Supermarche.NB_ARTICLES - 1);
 			
 			// Contrôle pour voir si la quantité est égale à zéro
-			nb = nb == 0 ? 1 : nb;
-			
-			liste.put(Supermarche.articles[idArticle], (liste.containsKey(Supermarche.articles[idArticle]) ? (liste.get(Supermarche.articles[idArticle]) + nb) : nb));
+			if(nb > 0){
+				liste.put(Supermarche.articles[idArticle], (liste.containsKey(Supermarche.articles[idArticle]) ? (liste.get(Supermarche.articles[idArticle]) + nb) : nb));
+			}
 		}
 	}
 	
@@ -104,7 +104,7 @@ public class Client extends Thread{
 				// Si il a l'article
 				// On marche jusqu'à lui
 				marcherEntreLesRayons();
-				System.out.println("CLIENT> " + nom + " marche entre les rayons");
+				System.out.println("CLIENT> " + nom + " marche vers le rayon souhaité");
 				
 				// On prend l'article
 				Supermarche.rayons[i].prendreArticle(liste.get(article));
@@ -120,12 +120,16 @@ public class Client extends Thread{
 		etat.changerEtat(EtatClient.ATTENTE_CAISSE);
 		System.out.println("CLIENT> " + nom + " attend à la caisse");
 		
-		// ... et on met les articles sur le tapis
+		// ... et on met les articles sur le tapis...
 		for(Article a : chariot.prendreArticle().keySet()){
-			attendreArticleSurTapis();
-			Supermarche.tapisDeCaisse.mettreArticles(this, a, chariot.prendreArticle().get(a));
-			
-			System.out.println("CLIENT> " + nom + " a posé son " + a.getNom() + " sur le tapis");
+			// ... 1 par 1
+			while(chariot.prendreArticle().get(a) > 0){
+				attendreArticleSurTapis();
+				Supermarche.tapisDeCaisse.mettreArticles(this, a);
+				chariot.prendreArticle().put(a, chariot.prendreArticle().get(a) - 1);
+				
+				System.out.println("CLIENT> " + nom + " a posé son " + a.getNom() + " sur le tapis");
+			}
 		}
 		
 		// On passe à la caisse

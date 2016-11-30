@@ -1,5 +1,6 @@
 package m1.miage.csr.tp5;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class Supermarche {
@@ -18,10 +19,10 @@ public class Supermarche {
 	public final static int[] TPS 				= {500, 200, 300, 20};
 	private final static int TAILLE_TAPIS 		= 10;
 	
-	public static Client[] 		clients;
-	public static Article[] 	articles;
-	public static Rayon[]		rayons;
-	public static FileChariots	chariots;
+	public static ArrayList<Client>	clients;
+	public static Article[] 		articles;
+	public static Rayon[]			rayons;
+	public static FileChariots		chariots;
 	
 	public static ChefDeRayon 		chefDeRayon;
 	public static EmployeDeCaisse	employeDeCaisse;
@@ -54,7 +55,7 @@ public class Supermarche {
 	
 	private static void genererClients()
 	{
-		clients = new Client[NB_CLIENTS];
+		clients = new ArrayList<Client>();
 		
 		// Génération des clients
 		for (int i = 0; i < NB_CLIENTS; i++)
@@ -68,7 +69,15 @@ public class Supermarche {
 			}
 			
 			// Génération du client
-			clients[i] = new Client(nom);
+			clients.add(new Client(nom));
+		}
+	}
+	
+	private static void afficherClients(){
+		System.out.println("Nombre de clients qui vont initialement entrer dans le magasin : " + clients.size());
+		
+		for(Client c : clients){
+			System.out.println("> " + c.getNom());
 		}
 	}
 	
@@ -77,6 +86,8 @@ public class Supermarche {
 		genererRayons();
 		genererChariots();
 		genererClients();
+		
+		afficherClients();
 		
 		// On crée le chef de rayon...
 		ChefDeRayon chefDeRayon = new ChefDeRayon("Ali Baba");
@@ -96,8 +107,8 @@ public class Supermarche {
 		employeDeCaisse.start();
 		
 		// On dit aux clients qu'ils peuvent venir
-		for(int i = 0; i < NB_CLIENTS; i++){
-			clients[i].start();
+		for(Client c : clients){
+			c.start();
 		}
 	}
 }

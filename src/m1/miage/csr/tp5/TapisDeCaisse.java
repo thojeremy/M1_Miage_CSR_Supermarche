@@ -25,19 +25,20 @@ public class TapisDeCaisse{
 		idClient 			= 0;
 	}
 	
-	public synchronized void mettreArticles(Client client, Article article, Integer quantite){
-		if(getNbArticlesTapis() + quantite > tailleTapis){
+	public synchronized void mettreArticles(Client client, Article article){
+		if(getNbArticlesTapis() + 1 > tailleTapis){
 			try{wait();}catch(Exception e){}
 		}
 		
 		// Si le client a déjà des articles sur le tapis...
 		if(tapis.containsKey(client)){
 			// ... on ajoute à ses articles...
-			tapis.get(client).put(article, quantite);
+			boolean aArticle = tapis.get(client).containsKey(article);
+			tapis.get(client).put(article, aArticle ? tapis.get(client).get(article) + 1 : 1);
 		} else {
 			// ... sinon on crée un nouveau client pour le tapis
 			HashMap<Article, Integer> hm = new HashMap<Article, Integer>();
-			hm.put(article, quantite);
+			hm.put(article, 1);
 			
 			tapis.put(client, hm);
 			ordreClient.put(idClient++, client);
@@ -59,22 +60,33 @@ public class TapisDeCaisse{
 		// On prend le premier client
 		Client client = prendrePremierClient();
 		
-		// On prend son premier article...
-		Article article = ordreArticles.remove(0);
-		
-		// ... On l'enlève du tapis
-		tapis.get(client).remove(article);
-		
-		// Si le client n'a plus d'articles sur le tapis...
-		if(tapis.get(client).isEmpty()){
-			// ... ça veut dire qu'il a payé et peut partir
-			tapis.remove(client);
-			supprimerPremierClient();
-		}
-		
-		System.out.println("ENLEVER ARTICLE TAPIS> "+ordreArticles.size());
+		if(client != null){
+			// On prend son premier article...
+			Article article = ordreArticles.get(0);
 			
-		notify();
+			boolean aArticle = tapis.get(client).containsKey(article);
+			
+			// ... on l'enlève du tapis par quantité de 1...
+			tapis.get(client).put(article, aArticle ? tapis.get(client).get(article) - 1 : 0);
+			
+			// ... et si il y en a plus sur le tapis... 
+			if(tapis.get(client).get(article) <= 0){
+				// ... on l'enlève des articles présents sur le tapis
+				tapis.get(client).remove(article);
+				ordreArticles.remove(0);
+			}
+			
+			// Si le client n'a plus d'articles sur le tapis...
+			if(tapis.get(client).isEmpty()){
+				// ... ça veut dire qu'il a payé et peut partir
+				tapis.remove(client);
+				supprimerPremierClient();
+			}
+			
+			System.out.println("ENLEVER ARTICLE TAPIS> " + ordreArticles.size());
+				
+			notify();
+		}
 	}
 	
 	public boolean articlePresent(){
@@ -104,7 +116,7 @@ public class TapisDeCaisse{
 	private Client prendrePremierClient(){
 		Integer[] tab = (Integer[]) ordreClient.keySet().toArray(new Integer[ordreClient.size()]);
 		rangerTabCroissant(tab);
-		return ordreClient.get(tab[0]);
+		return tab.length > 0 ? ordreClient.get(tab[0]) : null;
 	}
 	
 	private void rangerTabCroissant(Integer[] tab){
