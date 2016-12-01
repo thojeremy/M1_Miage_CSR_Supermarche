@@ -53,4 +53,8 @@ public class Rayon {
 	public int getIdRayon() {
 		return idRayon;
 	}
+	
+	public int getStock(){
+		return stock;
+	}
 }

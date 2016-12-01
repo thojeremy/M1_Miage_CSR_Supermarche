@@ -1,7 +1,13 @@
 package m1.miage.csr.tp5;
 
 import java.util.ArrayList;
-import java.util.Random;
+
+import org.restlet.Application;
+import org.restlet.Component;
+import org.restlet.Context;
+import org.restlet.data.Protocol;
+
+import m1.miage.csr.tp5.rest.SupermarcheApplication;
 
 public class Supermarche {
 	public final static int NB_ARTICLES			= 4;
@@ -28,8 +34,7 @@ public class Supermarche {
 	public static EmployeDeCaisse	employeDeCaisse;
 	public static TapisDeCaisse	tapisDeCaisse;
 	
-	private static void genererArticles()
-	{
+	private static void genererArticles(){
 		articles = new Article[NB_ARTICLES];
 		
 		// Génération des articles
@@ -38,8 +43,7 @@ public class Supermarche {
 		}
 	}
 	
-	private static void genererRayons()
-	{
+	private static void genererRayons(){
 		rayons = new Rayon[NB_RAYONS];
 		// Génération des rayons
 		for(int i = 0; i < NB_RAYONS; i++){
@@ -47,30 +51,32 @@ public class Supermarche {
 		}
 	}
 	
-	private static void genererChariots()
-	{
+	private static void genererChariots(){
 		// Génération des chariots
 		chariots = new FileChariots(NB_CHARIOTS);
 	}
 	
-	private static void genererClients()
-	{
+	private static void genererClients(){
 		clients = new ArrayList<Client>();
 		
 		// Génération des clients
-		for (int i = 0; i < NB_CLIENTS; i++)
-		{
-			// Génération du nom aléatoire
-			String nom = "";
-			int nbLettres = new Random().nextInt(7) + 1;
-			
-			for(int j = 0; j < nbLettres; j++){
-				nom += (nom.length() == 0 ? ( (char) (new Random().nextInt(25) + 65)) : ((char) (new Random().nextInt(25) + 97)) );
-			}
-			
+		for (int i = 0; i < NB_CLIENTS; i++){			
 			// Génération du client
-			clients.add(new Client(nom));
+			clients.add(new Client());
 		}
+	}
+	
+	public static ArrayList<Client> genererClients(int nb){
+		ArrayList<Client> res = new ArrayList<Client>();
+		
+		for(int i = 0; i < nb; i++){
+			Client c = new Client();
+			
+			res.add(c);
+			clients.add(c);
+		}
+		
+		return res;
 	}
 	
 	private static void afficherClients(){
@@ -105,6 +111,21 @@ public class Supermarche {
 		//employeDeCaisse.setDaemon(true);
 		// ... et on lui dit de commencer
 		employeDeCaisse.start();
+		
+		// ================= SERVICE REST =================
+		// On initialise le service rest...
+        Component component = new Component();
+        Context context = component.getContext().createChildContext();
+        component.getServers().add(Protocol.HTTP, 5000);
+        component.getClients().add(Protocol.FILE);
+
+        Application application = new SupermarcheApplication(context);
+
+        component.getDefaultHost().attach(application);
+       
+        // ... et on le lance
+        try {component.start();} catch (Exception e) {}
+        // ================= SERVICE REST =================
 		
 		// On dit aux clients qu'ils peuvent venir
 		for(Client c : clients){

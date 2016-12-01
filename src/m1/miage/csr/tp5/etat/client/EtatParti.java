@@ -7,7 +7,7 @@ public class EtatParti implements Etat{
 	
 	public EtatParti()
 	{
-		nom = EtatClient.ATTENTE_PRODUIT;
+		nom = EtatClient.PARTI;
 	}
 	
 	public String toString(){

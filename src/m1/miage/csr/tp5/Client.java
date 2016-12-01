@@ -26,8 +26,17 @@ public class Client extends Thread{
 		genererListe();
 	}
 	
-	public String getEtat()
-	{
+	public Client(){
+		this.nom = genererNom();
+		idClient = ID_CLIENT++;
+		
+		etat = new EtatClient();
+		chariot = null;
+		
+		genererListe();
+	}
+	
+	public String getEtat(){
 		return etat.getEtat();
 	}
 	
@@ -39,9 +48,12 @@ public class Client extends Thread{
 		return nom;
 	}
 	
-	public void prendreChariot()
-	{
+	public void prendreChariot(){
 		etat.changerEtat(EtatClient.EN_COURSE);
+	}
+	
+	public Map<Article, Integer> getListe(){
+		return liste;
 	}
 	
 	public void afficherListe(){
@@ -56,8 +68,7 @@ public class Client extends Thread{
 		System.out.println(res);
 	}
 	
-	private void genererListe()
-	{
+	private void genererListe(){
 		int nbArticles = new Random().nextInt(Supermarche.NB_ARTICLES);
 		// Contrôle pour voir si le nombre d'articles est égal à zéro
 		nbArticles = nbArticles == 0? 1 : nbArticles;
@@ -75,13 +86,23 @@ public class Client extends Thread{
 		}
 	}
 	
-	public void marcherEntreLesRayons()
-	{
+	private String genererNom(){
+		// Génération du nom aléatoire
+		String nom = "";
+		int nbLettres = new Random().nextInt(7) + 1;
+		
+		for(int j = 0; j < nbLettres; j++){
+			nom += (nom.length() == 0 ? ( (char) (new Random().nextInt(25) + 65)) : ((char) (new Random().nextInt(25) + 97)) );
+		}
+		
+		return nom;
+	}
+	
+	public void marcherEntreLesRayons(){
 		try{sleep(Supermarche.TPS[Supermarche.TPS_DEPLACEMENT_RAYON_CLIENT]);}catch(Exception e){}
 	}
 	
-	public void attendreArticleSurTapis()
-	{
+	public void attendreArticleSurTapis(){
 		try{sleep(Supermarche.TPS[Supermarche.TPS_ARTICLE_TAPIS]);}catch(Exception e){}
 	}
 	
@@ -107,7 +128,9 @@ public class Client extends Thread{
 				System.out.println("CLIENT> " + nom + " marche vers le rayon souhaité");
 				
 				// On prend l'article
+				etat.changerEtat(EtatClient.ATTENTE_PRODUIT);
 				Supermarche.rayons[i].prendreArticle(liste.get(article));
+				etat.changerEtat(EtatClient.EN_COURSE);
 				System.out.println("CLIENT> " + nom + " prend l'article " + article.getNom());
 				
 				// Et on le met dans le chariot
