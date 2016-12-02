@@ -1,7 +1,5 @@
 package m1.miage.csr.tp5.rest;
 
-import javax.xml.ws.ResponseWrapper;
-
 import org.json.JSONObject;
 import org.restlet.data.MediaType;
 import org.restlet.ext.json.JsonRepresentation;
@@ -43,20 +41,39 @@ public class ClientResource extends ServerResource {
 		json.put("id"	, client.getId());
 		json.put("nom"	, client.getNom());
 		json.put("etat"	, client.getEtat());
+		json.put("nbArticlesDifferents", client.prendreNombreArticlesDifferents());
 		
 		// La liste de courses
 		JSONObject liste = new JSONObject();
 		
+		int i = 0;
 		for(Article a : client.getListe().keySet()){
 			JSONObject article = new JSONObject();
 			
 			article.put("nom"		, a.getNom());
 			article.put("quantite"	, client.getListe().get(a));
 			
-			liste.put("article", article);
+			liste.put(Integer.toString(i), article);
+			i++;
 		}
 		
 		json.put("liste", liste);
+		
+		// La liste de courses à prendre
+		liste = new JSONObject();
+		
+		for(Article a : client.getListeAPrendre().keySet()){
+			JSONObject article = new JSONObject();
+			
+			article.put("nom",	a.getNom());
+			article.put("quantite"	, client.getListe().get(a));
+			
+			liste.put("article", article);
+		}
+		
+		json.put("listeAPrendre", liste);
+		
+		// Construction de la représentation
 
         JsonRepresentation result = new JsonRepresentation(json);
         result.setIndenting(true);

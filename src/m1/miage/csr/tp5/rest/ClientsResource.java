@@ -39,6 +39,7 @@ public class ClientsResource extends ServerResource{
 			json.put("id"	, c.getId());
 			json.put("nom"	, c.getNom());
 			json.put("etat"	, c.getEtat());
+			json.put("nbArticlesDifferents", c.prendreNombreArticlesDifferents());
 			json.put("url"	, "/supermarche/clients/" + c.getId());
 			
 			jsonClients.add(json);

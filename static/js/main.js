@@ -52,16 +52,18 @@ function clientsTable(){
 			console.log(data);
 
 			$.each(data, function (item) {
-				var name 	= data[item].nom;
-				var state 	= data[item].etat;
-				var id 		= data[item].id;
-				var url 	= data[item].url;
+				var name 		= data[item].nom;
+				var state 		= data[item].etat;
+				var id 			= data[item].id;
+				var url 		= data[item].url;
+				var nbArtDiff	= data[item].nbArticlesDifferents;
 
 				customers_table.append(
 				'<tr>' +
 					'<th><a href="' + url + '">' + id + '</a></th>' +
-					'<td>' + name + '</td>' +
-					'<td>' + state + '</td>' +
+					'<td>' + name 		+ '</td>' +
+					'<td>' + state 		+ '</td>' +
+					'<td>' + nbArtDiff 	+ '</td>' +
 					'<td><a type="button" class="btn btn-success btn-xs" href = "'+ url + '">Consulter</a></td>' +
 				'</tr>');
 			});
@@ -129,20 +131,34 @@ function infosClient(){
 			
 			// On prend et on affiche les infos du client
 			
-			var liste	= data.liste;
-			var etat	= data.etat;
-			var nom		= data.nom;
+			var liste			= data.liste;
+			var listeAPrendre 	= data.listeAPrendre;
+			var etat			= data.etat;
+			var nom				= data.nom;
+			var nbArtDiff		= data.nbArticlesDifferents;
 			
 			$(".nomClient").text(nom);
 			
-			$("#infosClient").html(	"<b>Nom  : </b>" + nom + "<br/>"+
-									"<b>État : </b>" + etat);
+			$("#infosClient").html(	"<b>Nom  : </b>" + nom 	+ "<br/>" +
+									"<b>État : </b>" + etat	+ "<br/>" +
+									"<b>Nombre d'articles différents : </b>" + nbArtDiff	+ "<br/>");
 
 			$.each(liste, function (item) {
 				var art 	= liste[item].nom;
 				var qte 	= liste[item].quantite;
 
 				$("#liste-course-client-table").append(
+				'<tr>' +
+					'<td>' + art 		+ '</td>' +
+					'<td>' + nbArtDiff 	+ '</td>' +
+				'</tr>');
+			});
+
+			$.each(listeAPrendre, function (item) {
+				var art 	= listeAPrendre[item].nom;
+				var qte 	= listeAPrendre[item].quantite;
+
+				$("#liste-course-a-prendre-client-table").append(
 				'<tr>' +
 					'<td>' + art + '</td>' +
 					'<td>' + qte + '</td>' +

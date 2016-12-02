@@ -47,6 +47,10 @@ public class Chariot {
 		return h;
 	}
 	
+	public boolean contientArticle(Article a){
+		return articles.containsKey(a);
+	}
+	
 	public Map<Article, Integer> prendreArticle()
 	{
 		return articles;

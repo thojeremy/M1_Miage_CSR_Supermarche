@@ -52,8 +52,28 @@ public class Client extends Thread{
 		etat.changerEtat(EtatClient.EN_COURSE);
 	}
 	
+	public int prendreNombreArticlesDifferents(){
+		return liste.size();
+	}
+	
 	public Map<Article, Integer> getListe(){
 		return liste;
+	}
+	
+	public Map<Article, Integer> getListeAPrendre(){
+		if(chariot == null){
+			return liste;
+		} else {
+			Map<Article, Integer> aPrendre = new HashMap<Article, Integer>();
+			
+			for(Article a : liste.keySet()){
+				if(! chariot.contientArticle(a)){
+					aPrendre.put(a, liste.get(a));
+				}
+			}
+			
+			return aPrendre;
+		}
 	}
 	
 	public void afficherListe(){
