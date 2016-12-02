@@ -1,4 +1,6 @@
-﻿$(document).ready(function() {
+﻿var loadImg = (new Image).src="/static/img/load.gif";
+
+$(document).ready(function() {
     $("#create-customer-form button").click( function() {
         var new_user = new Object();
 
@@ -43,13 +45,18 @@
  */
 function clientsTable(){
 	var customers_table = $('#clients-table tbody');
-	customers_table.empty();
+	
+	// On affiche le gif qui montre qu'on charge
+	afficher("load");
 
 	$.ajax({
 		type: "get",
 		url: "/supermarche/clients",
 		success: function(data){
 			console.log(data);
+	
+			// On cache le gif qui montre qu'on charge
+			cacher("load");
 
 			$.each(data, function (item) {
 				var name 		= data[item].nom;
@@ -84,12 +91,18 @@ function clientsTable(){
  */
 function stocksTable(){
 	var stocks_table = $('#stocks-table tbody');
+	
+	// On affiche le gif qui montre qu'on charge
+	afficher("load");
 
 	$.ajax({
 		type: "get",
 		url: "/supermarche/stock",
 		success: function(data){
 			console.log(data);
+	
+			// On cache le gif qui montre qu'on charge
+			cacher("load");
 
 			$.each(data, function (item) {
 				var art 	= data[item].article;
@@ -122,12 +135,18 @@ function infosClient(){
 	var id = window.location.href.split("/");
 	// Si on a un /supermarche/clients/ID/ on prend l'indice FIN-2 et si on a un /supermarche/clients/ID on prend l'indice FIN-1
 	id = id[id.length - 1].length == 0 ? id[id.length - 2] : id[id.length - 1];
+	
+	// On affiche le gif qui montre qu'on charge
+	afficher("load");
 
 	$.ajax({
 		type: "get",
 		url: "/supermarche/clients/" + id,
 		success: function(data){
 			console.log(data);
+	
+			// On cache le gif qui montre qu'on charge
+			cacher("load");
 			
 			// On prend et on affiche les infos du client
 			
@@ -175,3 +194,11 @@ function infosClient(){
 		contentType : "application/json"
 	});
 };
+
+function afficher(idObjet){
+	$("#" + idObjet).removeAttr("style");
+};
+
+function cacher(idObjet){
+	$("#" + idObjet).prop("style", "display: none");
+}
