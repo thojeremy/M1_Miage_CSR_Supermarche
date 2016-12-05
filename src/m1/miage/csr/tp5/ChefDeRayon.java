@@ -11,15 +11,17 @@ public class ChefDeRayon extends Thread{
 	private EtatChef etat;
 	private Map<Article, Integer> articles;
 	
+	/**
+	 * Le constructeur de la classe ChefDeRayon
+	 * 
+	 * @param nom	Le nom du chef de rayon
+	 */
 	public ChefDeRayon(String nom)
 	{
 		this.nom = nom;
 		articles = new HashMap<Article, Integer>();
 		
 		etat = new EtatChef();
-	}
-	
-	public void prendreArticles(){
 	}
 	
 	@Override
@@ -55,16 +57,25 @@ public class ChefDeRayon extends Thread{
 		}
 	}
 	
-	private void marcherEntreLesRayons()
-	{
+	/**
+	 * Permet d'attendre pendant que le chef de rayon marche entre les rayons
+	 */
+	private void marcherEntreLesRayons(){
 		try{sleep(Supermarche.TPS[Supermarche.TPS_DEPLACEMENT_RAYON_CHEF]);}catch(Exception e){}
 	}
 	
-	private void marcherVersEntrepot()
-	{
+	/**
+	 * Permet d'attendre pendant que le chef de rayon attend en entrepot
+	 */
+	private void marcherVersEntrepot(){
 		try{sleep(Supermarche.TPS[Supermarche.TPS_ENTREPOT_CHEF]);}catch(Exception e){}
 	}
 
+	/**
+	 * Permet de prendre le nom du chef de rayon
+	 * 
+	 * @return	Le nom du chef de rayon
+	 */
 	public String getNom() {
 		return nom;
 	}

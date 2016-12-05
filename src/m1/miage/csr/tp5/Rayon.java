@@ -9,6 +9,11 @@ public class Rayon {
 	private Article article;
 	private int stock;
 	
+	/**
+	 * Le constructeur de la classe Rayon
+	 * 
+	 * @param article	L'article
+	 */
 	public Rayon(Article article)
 	{
 		this.article = article;
@@ -17,6 +22,11 @@ public class Rayon {
 		idRayon = ID_RAYON++;
 	}
 	
+	/**
+	 * Prend le nombre [nbArticle] d'articles dans le rayon
+	 * 
+	 * @param nbArticle	Le nombre d'articles à prendre dans le rayon
+	 */
 	public synchronized void prendreArticle(int nbArticle){
 		while(stock - nbArticle < 0){
 			try{wait();}catch(Exception e){}
@@ -27,6 +37,13 @@ public class Rayon {
 		System.out.println("PRENDRE ARTICLE RAYON> " + nbArticle + " " + article.getNom() + " (" + stock + " en stock après avoir pris)");
 	}
 	
+	/**
+	 * Permet de mettre des articles dans le rayon
+	 * 
+	 * @param nbArticle	Le nombre d'articles à mettre dans le rayon
+	 * 
+	 * @return	Le nombre d'articles non mis dans le rayon
+	 */
 	public synchronized int mettreArticle(int nbArticle){
 		int articlesNonMis = 0;
 		
@@ -46,10 +63,20 @@ public class Rayon {
 		return articlesNonMis;
 	}
 	
+	/**
+	 * Prend l'article du rayon
+	 * 
+	 * @return	L'article du rayon
+	 */
 	public Article getArticle(){
 		return article;
 	}
 
+	/**
+	 * Prend l'id de l'article
+	 * 
+	 * @return	L'id de l'article
+	 */
 	public int getIdRayon() {
 		return idRayon;
 	}

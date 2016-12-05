@@ -14,6 +14,11 @@ public class TapisDeCaisse{
 	private int tailleTapis;
 	private int idClient;
 	
+	/**
+	 * Constructeur du tapis de caisse
+	 * 
+	 * @param tailleTapis	La taille du tapis
+	 */
 	public TapisDeCaisse(int tailleTapis)
 	{
 		tapis 		= new HashMap<Client, HashMap<Article, Integer>>();
@@ -25,6 +30,12 @@ public class TapisDeCaisse{
 		idClient 			= 0;
 	}
 	
+	/**
+	 * Permet de mettre l'article [article] du client
+	 * 
+	 * @param client	Le client qui veut poser un article
+	 * @param article	L'article que le client veut poser
+	 */
 	public synchronized void mettreArticles(Client client, Article article){
 		if(getNbArticlesTapis() + 1 > tailleTapis){
 			try{wait();}catch(Exception e){}
@@ -52,6 +63,9 @@ public class TapisDeCaisse{
 		notify();
 	}
 	
+	/**
+	 * Permet d'enlever un article du tapis
+	 */
 	public synchronized void enleverArticle(){
 		if(!articlePresent()){
 			try{wait();}catch(Exception e){}
@@ -89,10 +103,21 @@ public class TapisDeCaisse{
 		}
 	}
 	
+	/**
+	 * Permet de savoir s'il y a au moins un article présent sur le tapis
+	 * 
+	 * @return	TRUE	S'il y a au moins un article sur le tapis
+	 * 			FALSE	Sinon
+	 */
 	public boolean articlePresent(){
 		return ordreArticles.size() > 0;
 	}
 	
+	/**
+	 * Permet de savoir le nombre d'articles sur le tapis
+	 * 
+	 * @return	Le nombre d'articles sur le tapis
+	 */
 	private int getNbArticlesTapis(){
 		int nb = 0;
 		
@@ -107,18 +132,31 @@ public class TapisDeCaisse{
 		return nb;
 	}
 	
+	/**
+	 * Permet de supprimer le premier client de la liste de clients présents sur le tapis
+	 */
 	private void supprimerPremierClient(){
 		Integer[] tab = (Integer[]) ordreClient.keySet().toArray(new Integer[ordreClient.size()]);
 		rangerTabCroissant(tab);
 		ordreClient.remove(tab[0]);
 	}
 	
+	/**
+	 * Permet de prendre le premier client courant qui a posé un article sur le tapis
+	 * 
+	 * @return	Le premier client courant du tapis
+	 */
 	private Client prendrePremierClient(){
 		Integer[] tab = (Integer[]) ordreClient.keySet().toArray(new Integer[ordreClient.size()]);
 		rangerTabCroissant(tab);
 		return tab.length > 0 ? ordreClient.get(tab[0]) : null;
 	}
 	
+	/**
+	 * Permet de ranger un tableau d'entiers par ordre croissant
+	 * 
+	 * @param tab	Le tableau à ranger
+	 */
 	private void rangerTabCroissant(Integer[] tab){
 		for(int i = 0; i < tab.length; i++){
 			for(int j = 0; j < tab.length; j++){

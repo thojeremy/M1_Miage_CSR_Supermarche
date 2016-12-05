@@ -7,6 +7,11 @@ public class FileChariots {
 	
 	private Chariot[] chariots;
 	
+	/**
+	 * Constructeur de la file de chariots
+	 * 
+	 * @param nbChariot	Le nombre de chariots à générer
+	 */
 	public FileChariots(int nbChariot)
 	{
 		this.nbChariot = nbChariot;
@@ -17,6 +22,11 @@ public class FileChariots {
 		}
 	}
 	
+	/**
+	 * Permet de prendre un chariot dans la file de chariots
+	 * 
+	 * @return	Le chariot pris
+	 */
 	public synchronized Chariot prendreChariot()
 	{
 		while(nbChariot <= 0){
@@ -30,6 +40,11 @@ public class FileChariots {
 		return prendreChariotEnAttente();
 	}
 	
+	/**
+	 * Permet de remettre un chariot dans la file de chariots
+	 * 
+	 * @param chariot	Le chariot à remettre
+	 */
 	public synchronized void mettreChariot(Chariot chariot)
 	{
 		nbChariot++;
@@ -47,6 +62,11 @@ public class FileChariots {
 		notifyAll();
 	}
 	
+	/**
+	 * Permet de savoir quel est le premier chariot de la file qui est en attente
+	 * 
+	 * @return	Le premier chariot de la file qui est en attente
+	 */
 	private Chariot prendreChariotEnAttente(){
 		for(int i = 0; i < chariots.length; i++){
 			if(chariots[i].getEtat() == EtatChariot.EN_ATTENTE){

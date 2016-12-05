@@ -16,6 +16,11 @@ public class Client extends Thread{
 	
 	private Map<Article, Integer> liste;
 	
+	/**
+	 * Le constructeur de la classe Client s'il y a le nom qui est précisé
+	 * 
+	 * @param nom	Le nom du client
+	 */
 	public Client(String nom){
 		this.nom = nom;
 		idClient = ID_CLIENT++;
@@ -26,6 +31,9 @@ public class Client extends Thread{
 		genererListe();
 	}
 	
+	/**
+	 * Le constructeur de la classe Client si on veut un nom aléatoire
+	 */
 	public Client(){
 		this.nom = genererNom();
 		idClient = ID_CLIENT++;
@@ -36,30 +44,63 @@ public class Client extends Thread{
 		genererListe();
 	}
 	
+	/**
+	 * Permet de predre l'état courant du client
+	 * 
+	 * @return	L'état courant du client
+	 */
 	public String getEtat(){
 		return etat.getEtat();
 	}
 	
+	/** 
+	 * Permet de prendre l'id du client
+	 * 
+	 * @return L'id du client
+	 */
 	public long getId(){
 		return idClient;
 	}
 	
+	/**
+	 * Permet de prendre le nom du client
+	 * 
+	 * @return	Le nom du client
+	 */
 	public String getNom(){
 		return nom;
 	}
 	
+	/**
+	 * Permet de prendre un chariot
+	 */
 	public void prendreChariot(){
 		etat.changerEtat(EtatClient.EN_COURSE);
 	}
 	
+	/**
+	 * Permet de prendre le nombre d'articles qui ne sont pas les mêmes
+	 * 
+	 * @return	Le nombre d'articles qui sont différents
+	 */
 	public int prendreNombreArticlesDifferents(){
 		return liste.size();
 	}
 	
+	/**
+	 * Permet de prendre la liste de courses du client
+	 * 
+	 * @return	La liste de courses du client
+	 */
 	public Map<Article, Integer> getListe(){
 		return liste;
 	}
 	
+	/**
+	 * Permet de prendre la liste des courses qu'il reste à prendre dans les rayons
+	 * 
+	 * @return	La liste de courses qu'il reste à prendre dans les rayons
+	 */
 	public Map<Article, Integer> getListeAPrendre(){
 		if(chariot == null){
 			return liste;
@@ -76,6 +117,9 @@ public class Client extends Thread{
 		}
 	}
 	
+	/**
+	 * Permet d'afficher la liste de courses du client
+	 */
 	public void afficherListe(){
 		String res = "== Liste de " + nom + " ==\n";
 		
@@ -88,6 +132,9 @@ public class Client extends Thread{
 		System.out.println(res);
 	}
 	
+	/**
+	 * Permet de générer la liste aléatoirement
+	 */
 	private void genererListe(){
 		int nbArticles = new Random().nextInt(Supermarche.NB_ARTICLES);
 		// Contrôle pour voir si le nombre d'articles est égal à zéro
@@ -106,6 +153,11 @@ public class Client extends Thread{
 		}
 	}
 	
+	/**
+	 * Permet de générer le nom du client
+	 * 
+	 * @return	Le nom généré
+	 */
 	private String genererNom(){
 		// Génération du nom aléatoire
 		String nom = "";
@@ -118,10 +170,16 @@ public class Client extends Thread{
 		return nom;
 	}
 	
+	/**
+	 * Permet d'attendre le temps que le client marche entre les rayons
+	 */
 	public void marcherEntreLesRayons(){
 		try{sleep(Supermarche.TPS[Supermarche.TPS_DEPLACEMENT_RAYON_CLIENT]);}catch(Exception e){}
 	}
 	
+	/**
+	 * Permet d'attendre le temps que le client pose un article sur le tapis
+	 */
 	public void attendreArticleSurTapis(){
 		try{sleep(Supermarche.TPS[Supermarche.TPS_ARTICLE_TAPIS]);}catch(Exception e){}
 	}

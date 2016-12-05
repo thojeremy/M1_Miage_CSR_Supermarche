@@ -34,6 +34,9 @@ public class Supermarche {
 	public static EmployeDeCaisse	employeDeCaisse;
 	public static TapisDeCaisse	tapisDeCaisse;
 	
+	/**
+	 * Permet de générer des articles
+	 */
 	private static void genererArticles(){
 		articles = new Article[NB_ARTICLES];
 		
@@ -43,6 +46,9 @@ public class Supermarche {
 		}
 	}
 	
+	/**
+	 * Permet de générer des rayons
+	 */
 	private static void genererRayons(){
 		rayons = new Rayon[NB_RAYONS];
 		// Génération des rayons
@@ -51,11 +57,17 @@ public class Supermarche {
 		}
 	}
 	
+	/**
+	 * Permet de générer des chariots
+	 */
 	private static void genererChariots(){
 		// Génération des chariots
 		chariots = new FileChariots(NB_CHARIOTS);
 	}
 	
+	/**
+	 * Permet de générer le nombre de clients jusqu'à NB_CLIENTS
+	 */
 	private static void genererClients(){
 		clients = new ArrayList<Client>();
 		
@@ -66,6 +78,13 @@ public class Supermarche {
 		}
 	}
 	
+	/**
+	 * Permet de générer [nb] clients et renvoie les clients fraichement générés
+	 * 
+	 * @param nb	Le nombre de clients
+	 * 
+	 * @return		Les clients fraichement générés
+	 */
 	public static ArrayList<Client> genererClients(int nb){
 		ArrayList<Client> res = new ArrayList<Client>();
 		
@@ -79,6 +98,9 @@ public class Supermarche {
 		return res;
 	}
 	
+	/**
+	 * Permet d'afficher les clients
+	 */
 	private static void afficherClients(){
 		System.out.println("Nombre de clients qui vont initialement entrer dans le magasin : " + clients.size());
 		

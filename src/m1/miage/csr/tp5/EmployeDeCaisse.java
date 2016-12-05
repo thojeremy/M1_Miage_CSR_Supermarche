@@ -16,6 +16,11 @@ public class EmployeDeCaisse extends Thread{
 		}
 	}
 
+	/**
+	 * Permet de prendre le nom de l'employé de caisse
+	 * 
+	 * @return	Le nom du client
+	 */
 	public String getNom() {
 		return nom;
 	}
